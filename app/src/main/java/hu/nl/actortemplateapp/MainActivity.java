@@ -15,12 +15,18 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-
+    GoogleApiClient mGoogleApiClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +39,14 @@ public class MainActivity extends AppCompatActivity
             Intent signInIntent = new Intent(this, SignInActivity.class);
             startActivity(signInIntent);
         }
+
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .build();
+        mGoogleApiClient.connect();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -77,10 +91,7 @@ public class MainActivity extends AppCompatActivity
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+
 
         return super.onOptionsItemSelected(item);
     }
@@ -91,22 +102,43 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+        if (id == R.id.action_sign_out) {
+            signOut();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void signOut() {
+        FirebaseAuth fbAuth = FirebaseAuth.getInstance();
+        FirebaseUser fbUser = fbAuth.getCurrentUser();
+        if(fbUser == null){
+            Toast.makeText(getApplicationContext(),"Logout failed, no firebase user logged in", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        fbAuth.signOut();
+        Auth.GoogleSignInApi.signOut(mGoogleApiClient);
+        Intent startAppIntent = new Intent(this, MainActivity.class);
+        startActivity(startAppIntent);
+        /*try{
+            mGoogleApiClient.connect();
+        }
+        catch(IllegalStateException ex){
+            Toast.makeText(getApplicationContext(),"Connect failed", Toast.LENGTH_SHORT).show();
+        }
+        if(mGoogleApiClient.isConnected()){
+            Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
+                    new ResultCallback<Status>() {
+                        public void onResult(Status status) {
+                            Toast.makeText(getApplicationContext(), "Logged out", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                        }
+                    });
+        }
+        else{
+            Toast.makeText(getApplicationContext(),"Logout failed, client not connected", Toast.LENGTH_SHORT).show();
+        }*/
     }
 }
