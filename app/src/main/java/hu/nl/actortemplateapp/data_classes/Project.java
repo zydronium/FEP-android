@@ -1,4 +1,4 @@
-package hu.nl.actortemplateapp;
+package hu.nl.actortemplateapp.data_classes;
 
 /**
  * Created by Dyon on 20-2-2017.

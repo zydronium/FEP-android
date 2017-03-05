@@ -1,5 +1,8 @@
-package hu.nl.actortemplateapp;
+package hu.nl.actortemplateapp.adapters;
 
+import android.content.Intent;
+import android.graphics.Color;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,30 +17,42 @@ import com.google.firebase.database.DatabaseReference;
 import java.util.ArrayList;
 import java.util.List;
 
+import hu.nl.actortemplateapp.R;
+import hu.nl.actortemplateapp.activities.ProjectDetailsActivity;
+import hu.nl.actortemplateapp.data_classes.Project;
+
 /**
  * Created by Dyon on 27-2-2017.
  */
 
 public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ViewHolder> {
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class ViewHolder extends RecyclerView.ViewHolder {
 
         //Viewholder title = name in dbase
         //Viewholder content = description in dbase
-
         public TextView title;
         public TextView content;
+        public CardView cardView;
+        public TextView id;
 
         public ViewHolder(View v) {
             super(v);
             title = (TextView) v.findViewById(R.id.project_title);
             content = (TextView) v.findViewById(R.id.project_content);
+            id = (TextView) v.findViewById(R.id.project_id);
+            cardView = (CardView) v.findViewById(R.id.card_view);
+            cardView.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v) {
+                    Intent projectDetailsActivity = new Intent(v.getContext(), ProjectDetailsActivity.class);
+
+                    v.getContext().startActivity(projectDetailsActivity);
+                }
+            });
         }
 
-        @Override
-        public void onClick(View v) {
 
-        }
     }
     private List<Project> projects = new ArrayList<Project>();
     private DatabaseReference mFirebaseDatabaseReference;
@@ -48,6 +63,7 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ViewHold
 
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                //Get projects from firebase and put them inside arraylist.
                 Project p = dataSnapshot.getValue(Project.class);
                 p.setKey(dataSnapshot.getKey());
                 projects.add(p);
@@ -74,9 +90,6 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ViewHold
 
             }
         });
-        //Get projects from firebase and put them inside projecten.
-
-        //mFirebaseDatabaseReference.child("Projecten");
     }
 
     @Override
@@ -92,7 +105,13 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ViewHold
         //Viewholder content = description in dbase
         holder.title.setText(p.getName());
         holder.content.setText(p.getDescription());
-
+        holder.id.setText(p.getKey());
+        if((position % 2) == 0){
+            holder.cardView.setCardBackgroundColor(Color.CYAN);
+        }
+        else{
+            holder.cardView.setCardBackgroundColor(Color.BLUE);
+        }
     }
 
     @Override
