@@ -8,6 +8,8 @@ public class ActorTemplate {
     public String actorName;
     public String actorDescription;
     public String key;
+    public boolean isArchived;
+
 
     public ActorTemplate(){
 
@@ -36,4 +38,13 @@ public class ActorTemplate {
     public void setKey(String key) {
         this.key = key;
     }
+
+    public boolean isArchived() {
+        return isArchived;
+    }
+
+    public void setArchived(boolean archived) {
+        isArchived = archived;
+    }
+
 }

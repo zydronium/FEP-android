@@ -1,29 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<android.support.v4.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-    <include
-        layout="@layout/app_bar_main"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:openDrawer="start">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rolesRecyclerView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <TextView
-            android:id="@+id/project_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <TextView
-            android:id="@+id/project_description"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/actorsRecyclerView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-        </android.support.v7.widget.RecyclerView>
-    </android.support.v7.widget.RecyclerView>
-</LinearLayout>
+    <RelativeLayout
+        android:layout_height="match_parent"
+        android:layout_width="match_parent">
+
+
+        <include layout="@layout/app_bar_main" />
+    </RelativeLayout>
+
+    <include layout="@layout/side_navigation"/>
+
+</android.support.v4.widget.DrawerLayout>

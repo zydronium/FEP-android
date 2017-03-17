@@ -12,17 +12,13 @@ import hu.nl.actortemplateapp.R;
  * Created by Dyon on 5-3-2017.
  */
 
-public class ProjectDetailsActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class ProjectDetailsActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_projectdetails);
-    }
+        super.onCreateDrawer();
 
-
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        return false;
     }
 }

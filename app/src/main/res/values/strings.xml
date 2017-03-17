@@ -4,6 +4,6 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_sign_in">Sign in</string>
-    <string name="action_sign_out">Settings</string>
+    <string name="action_sign_out">Sign out</string>
 
 </resources>
