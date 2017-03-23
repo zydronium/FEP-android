@@ -21,4 +21,15 @@ public class ProjectDetailsActivity extends BaseActivity {
         super.onCreateDrawer();
 
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item){
+        return super.onNavigationItemSelected(item);
+    }
+
 }

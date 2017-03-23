@@ -39,17 +39,17 @@ import hu.nl.actortemplateapp.R;
  * Created by Dyon on 13-3-2017.
  */
 
-public class BaseActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public abstract class BaseActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     protected GoogleApiClient mGoogleApiClient;
     ActionBarDrawerToggle mDrawerToggle;
     private static final String TAG = "BaseActivity";
     protected void onCreateDrawer(){
-
-
-
+        FirebaseUser uuer = FirebaseAuth.getInstance().getCurrentUser();
         if(FirebaseAuth.getInstance().getCurrentUser() == null) {
             Intent signInIntent = new Intent(this, SignInActivity.class);
             startActivity(signInIntent);
+            finish();
+            return;
         }
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -79,6 +79,8 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
     }
 
+
+
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -102,6 +104,9 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+        if(id == R.id.action_sign_out){
+            signOut();
+        }
         return super.onOptionsItemSelected(item);
     }
 

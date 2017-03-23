@@ -48,8 +48,6 @@ public class SignInActivity extends AppCompatActivity implements
     private SignInButton mSignInButton;
 
     private GoogleApiClient mGoogleApiClient;
-
-    // Firebase instance variables
     private FirebaseAuth mFirebaseAuth;
 
     @Override
@@ -57,10 +55,7 @@ public class SignInActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
 
-        // Assign fields
         mSignInButton = (SignInButton) findViewById(R.id.sign_in_button);
-
-        // Set click listeners
         mSignInButton.setOnClickListener(this);
 
         // Configure Google Sign In
@@ -75,6 +70,7 @@ public class SignInActivity extends AppCompatActivity implements
 
         // Initialize FirebaseAuth
         mFirebaseAuth = FirebaseAuth.getInstance();
+
     }
 
     @Override

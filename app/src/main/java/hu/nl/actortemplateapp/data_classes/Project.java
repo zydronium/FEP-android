@@ -10,11 +10,13 @@ public class Project {
     public String name;
     public String description;
     public String key;
-    public ArrayList<User> users;
+    public String analist;
+    public ArrayList<ActorTemplate> actorTemplates;
 
     public Project(){
 
     }
+
 
     public String getKey() {
         return key;
@@ -40,12 +42,21 @@ public class Project {
         this.description = description;
     }
 
-    public ArrayList<User> getUsers() {
-        return users;
+    public ArrayList<ActorTemplate> getActorTemplates() {
+        return actorTemplates;
     }
 
-    public void setUsers(ArrayList<User> users) {
-        this.users = users;
+    public void setActorTemplates(ArrayList<ActorTemplate> actorTemplates) {
+        this.actorTemplates = actorTemplates;
     }
+
+    public String getAnalist() {
+        return analist;
+    }
+
+    public void setAnalist(String analist) {
+        this.analist = analist;
+    }
+
 
 }

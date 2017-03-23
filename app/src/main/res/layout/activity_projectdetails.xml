@@ -13,8 +13,14 @@
         android:layout_height="match_parent"
         android:layout_width="match_parent">
 
-
         <include layout="@layout/app_bar_main" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/actorTemplates"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+
     </RelativeLayout>
 
     <include layout="@layout/side_navigation"/>

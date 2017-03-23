@@ -5,4 +5,5 @@ package hu.nl.actortemplateapp.adapters;
  */
 
 public class ActorAdapter {
+
 }

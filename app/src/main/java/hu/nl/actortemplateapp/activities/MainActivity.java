@@ -2,6 +2,7 @@ package hu.nl.actortemplateapp.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.design.widget.NavigationView;
@@ -39,10 +40,21 @@ public class MainActivity extends BaseActivity {
         mRecyclerView = (RecyclerView)findViewById(R.id.my_recycler_view);
         mRecyclerView.setHasFixedSize(true);
 
+
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         mAdapter = new ProjectAdapter(FirebaseDatabase.getInstance().getReference());
         mRecyclerView.setAdapter(mAdapter);
     }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item){
+        return super.onNavigationItemSelected(item);
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        return super.onOptionsItemSelected(item);
+    }
+
 }
