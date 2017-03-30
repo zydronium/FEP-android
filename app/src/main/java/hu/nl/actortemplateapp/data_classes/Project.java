@@ -11,7 +11,8 @@ public class Project {
     public String description;
     public String key;
     public String analist;
-    public ArrayList<ActorTemplate> actorTemplates;
+    public ArrayList<ActorTemplate> actortemplates;
+
 
     public Project(){
 
@@ -42,14 +43,6 @@ public class Project {
         this.description = description;
     }
 
-    public ArrayList<ActorTemplate> getActorTemplates() {
-        return actorTemplates;
-    }
-
-    public void setActorTemplates(ArrayList<ActorTemplate> actorTemplates) {
-        this.actorTemplates = actorTemplates;
-    }
-
     public String getAnalist() {
         return analist;
     }
@@ -58,5 +51,12 @@ public class Project {
         this.analist = analist;
     }
 
+    public ArrayList<ActorTemplate> getActortemplates() {
+        return actortemplates;
+    }
+
+    public void setActortemplates(ArrayList<ActorTemplate> actortemplates) {
+        this.actortemplates = actortemplates;
+    }
 
 }

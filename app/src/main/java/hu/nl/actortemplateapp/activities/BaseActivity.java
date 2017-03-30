@@ -7,6 +7,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.v4.view.GravityCompat;
 
@@ -25,6 +26,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -40,17 +43,21 @@ import hu.nl.actortemplateapp.R;
  */
 
 public abstract class BaseActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    protected GoogleApiClient mGoogleApiClient;
-    ActionBarDrawerToggle mDrawerToggle;
+    private GoogleApiClient mGoogleApiClient;
+    private ActionBarDrawerToggle mDrawerToggle;
     private static final String TAG = "BaseActivity";
+    protected DatabaseReference firebase;
+
     protected void onCreateDrawer(){
-        FirebaseUser uuer = FirebaseAuth.getInstance().getCurrentUser();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if(FirebaseAuth.getInstance().getCurrentUser() == null) {
             Intent signInIntent = new Intent(this, SignInActivity.class);
             startActivity(signInIntent);
             finish();
             return;
         }
+
+        firebase = FirebaseDatabase.getInstance().getReference();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         try {

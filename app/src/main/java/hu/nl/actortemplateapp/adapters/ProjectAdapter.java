@@ -91,6 +91,7 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ViewHold
                 @Override
                 public void onClick(View v) {
                     Intent projectDetailsActivity = new Intent(v.getContext(), ProjectDetailsActivity.class);
+                    Log.d(TAG, "projectid: " + id.getText());
                     projectDetailsActivity.putExtra("projectid", id.getText());
                     v.getContext().startActivity(projectDetailsActivity);
                 }
@@ -119,12 +120,10 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ViewHold
         } else {
             holder.cardView.setCardBackgroundColor(Color.parseColor("#80CBC4"));
         }
-        Log.d(TAG,FirebaseAuth.getInstance().getCurrentUser().getEmail().toLowerCase());
-        Log.d(TAG,p.analist.toLowerCase());
-        boolean b = FirebaseAuth.getInstance().getCurrentUser().getEmail().toLowerCase() == p.analist.toLowerCase();
-        Log.d(TAG, ""+b);
-        if (!(FirebaseAuth.getInstance().getCurrentUser().getEmail().toLowerCase() == p.analist.toLowerCase())) {
-            //holder.fab.hide();
+
+        //Currentuser == analist
+        if (!(FirebaseAuth.getInstance().getCurrentUser().getEmail().toLowerCase().equals(p.analist.toLowerCase()))) {
+            holder.fab.hide();
         }
 
     }

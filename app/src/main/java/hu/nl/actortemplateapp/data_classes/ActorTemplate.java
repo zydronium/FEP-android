@@ -1,34 +1,36 @@
 package hu.nl.actortemplateapp.data_classes;
 
+import java.util.ArrayList;
+
 /**
  * Created by Dyon on 5-3-2017.
  */
 
 public class ActorTemplate {
-    public String actorName;
-    public String actorDescription;
+    public String actor;
+    public String beschrijving;
     public String key;
     public boolean isArchived;
-
+    public ArrayList<Actor> actoren;
 
     public ActorTemplate(){
-
+        actoren = new ArrayList<Actor>();
     }
 
-    public String getActorName() {
-        return actorName;
+    public String getActor() {
+        return actor;
     }
 
-    public void setActorName(String actorName) {
-        this.actorName = actorName;
+    public void setActor(String actor) {
+        this.actor = actor;
     }
 
-    public String getActorDescription() {
-        return actorDescription;
+    public String getBeschrijving() {
+        return beschrijving;
     }
 
-    public void setActorDescription(String actorDescription) {
-        this.actorDescription = actorDescription;
+    public void setBeschrijving(String beschrijving) {
+        this.beschrijving = beschrijving;
     }
 
     public String getKey() {
@@ -45,6 +47,14 @@ public class ActorTemplate {
 
     public void setArchived(boolean archived) {
         isArchived = archived;
+    }
+
+    public ArrayList<Actor> getActoren() {
+        return actoren;
+    }
+
+    public void setActoren(ArrayList<Actor> actoren) {
+        this.actoren = actoren;
     }
 
 }
