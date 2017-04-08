@@ -20,7 +20,10 @@
         <activity android:name=".activities.SignInActivity" />
 
         <activity
-            android:name=".activities.ProjectDetailsActivity"
+            android:name=".activities.ActorTemplateActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".activities.NewActorTemplateActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
 
     </application>

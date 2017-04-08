@@ -38,14 +38,17 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
         super.onCreateDrawer();
 
-        mRecyclerView = (RecyclerView)findViewById(R.id.my_recycler_view);
-        mRecyclerView.setHasFixedSize(true);
+        if(hasFirebaseReference()) {
+            mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
+            mRecyclerView.setHasFixedSize(true);
 
-        mLayoutManager = new LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(mLayoutManager);
+            mLayoutManager = new LinearLayoutManager(this);
+            mRecyclerView.setLayoutManager(mLayoutManager);
 
-        mAdapter = new ProjectAdapter(firebase);
-        mRecyclerView.setAdapter(mAdapter);
+
+            mAdapter = new ProjectAdapter(firebase);
+            mRecyclerView.setAdapter(mAdapter);
+        }
     }
 
     @Override

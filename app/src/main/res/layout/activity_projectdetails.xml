@@ -13,15 +13,36 @@
         android:layout_height="match_parent"
         android:layout_width="match_parent">
 
-        <include layout="@layout/app_bar_main" />
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/actorTemplates"
+        <include layout="@layout/app_bar_main"
+            android:id="@+id/appbarmain"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:context="hu.nl.actortemplateapp.activities.ProjectDetailsActivity"/>
+            android:layout_height="wrap_content" />
 
+        <android.support.v7.widget.CardView
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/card_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="60dp"
+            card_view:cardCornerRadius="4dp"
+            card_view:cardUseCompatPadding="true">
 
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/actorTemplates"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/appbarmain"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                tools:context="hu.nl.actortemplateapp.activities.ActorTemplateActivity"/>
+
+        </android.support.v7.widget.CardView>
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/newactortemplatefab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:onClick="newActorTemplate"/>
     </RelativeLayout>
 
     <include layout="@layout/side_navigation"/>

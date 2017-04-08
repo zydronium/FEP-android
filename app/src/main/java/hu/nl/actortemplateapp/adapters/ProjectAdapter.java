@@ -6,6 +6,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,10 +19,12 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import hu.nl.actortemplateapp.R;
-import hu.nl.actortemplateapp.activities.ProjectDetailsActivity;
+import hu.nl.actortemplateapp.activities.ActorTemplateActivity;
 import hu.nl.actortemplateapp.data_classes.Project;
 
 /**
@@ -31,7 +34,7 @@ import hu.nl.actortemplateapp.data_classes.Project;
 public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ViewHolder> {
 
 
-    private List<Project> projects = new ArrayList<Project>();
+    private ArrayList<Project> projects = new ArrayList<Project>();
     private DatabaseReference mFirebaseDatabaseReference;
 
     private static final String TAG = "ProjectAdapter";
@@ -41,10 +44,10 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ViewHold
 
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                //Get projects from firebase and put them inside arraylist.
-                Project p = dataSnapshot.getValue(Project.class);
-                p.setKey(dataSnapshot.getKey());
-                projects.add(p);
+                //Get projects from firebase and put them inside arraylist.;
+                HashMap<String, Object> map = (HashMap<String, Object>)dataSnapshot.getValue();
+                map.put("key", dataSnapshot.getKey());
+                projects = HashMapHelper.addHashMapToProjects(map, projects);
                 notifyDataSetChanged();
             }
 
@@ -71,7 +74,6 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ViewHold
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-
         //Viewholder title = name in dbase
         //Viewholder content = description in dbase
         public TextView title;
@@ -90,15 +92,12 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ViewHold
             cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent projectDetailsActivity = new Intent(v.getContext(), ProjectDetailsActivity.class);
-                    Log.d(TAG, "projectid: " + id.getText());
+                    Intent projectDetailsActivity = new Intent(v.getContext(), ActorTemplateActivity.class);
                     projectDetailsActivity.putExtra("projectid", id.getText());
                     v.getContext().startActivity(projectDetailsActivity);
                 }
             });
         }
-
-
     }
 
     @Override
@@ -107,22 +106,21 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ViewHold
         return new ViewHolder(projectView);
     }
 
+
     @Override
     public void onBindViewHolder(ProjectAdapter.ViewHolder holder, int position) {
-        Project p = projects.get(position);
-        //Viewholder title = name in dbase
-        //Viewholder content = description in dbase
-        holder.title.setText(p.getName());
-        holder.content.setText(p.getDescription());
-        holder.id.setText(p.getKey());
+        Project project = projects.get(position);
+        holder.title.setText(project.getName());
+        holder.content.setText(project.getDescription());
+        holder.id.setText(project.getKey());
+        holder.title.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
         if ((position % 2) == 0) {
             holder.cardView.setCardBackgroundColor(Color.parseColor("#42A5F5"));
         } else {
             holder.cardView.setCardBackgroundColor(Color.parseColor("#80CBC4"));
         }
-
-        //Currentuser == analist
-        if (!(FirebaseAuth.getInstance().getCurrentUser().getEmail().toLowerCase().equals(p.analist.toLowerCase()))) {
+        //Hide the FloatingActionButton when currentuser != analist.
+        if (!(FirebaseAuth.getInstance().getCurrentUser().getEmail().toLowerCase().equals(project.analist.toLowerCase()))) {
             holder.fab.hide();
         }
 

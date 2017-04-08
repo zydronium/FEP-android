@@ -1,6 +1,7 @@
 package hu.nl.actortemplateapp.data_classes;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by Dyon on 20-2-2017.
@@ -11,7 +12,6 @@ public class Project {
     public String description;
     public String key;
     public String analist;
-    public ArrayList<ActorTemplate> actortemplates;
 
 
     public Project(){
@@ -49,14 +49,6 @@ public class Project {
 
     public void setAnalist(String analist) {
         this.analist = analist;
-    }
-
-    public ArrayList<ActorTemplate> getActortemplates() {
-        return actortemplates;
-    }
-
-    public void setActortemplates(ArrayList<ActorTemplate> actortemplates) {
-        this.actortemplates = actortemplates;
     }
 
 }

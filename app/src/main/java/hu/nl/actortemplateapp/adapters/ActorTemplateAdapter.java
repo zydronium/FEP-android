@@ -1,8 +1,5 @@
 package hu.nl.actortemplateapp.adapters;
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,14 +14,14 @@ import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import hu.nl.actortemplateapp.R;
-import hu.nl.actortemplateapp.activities.ProjectDetailsActivity;
 import hu.nl.actortemplateapp.data_classes.ActorTemplate;
-import hu.nl.actortemplateapp.data_classes.Project;
 
 /**
  * Created by Dyon on 9-3-2017.
@@ -32,10 +29,13 @@ import hu.nl.actortemplateapp.data_classes.Project;
 
 public class ActorTemplateAdapter extends RecyclerView.Adapter<ActorTemplateAdapter.ViewHolder> {
 
-    private List<ActorTemplate> actorTemplates = new ArrayList<>();
+    private ArrayList<ActorTemplate> actorTemplates = new ArrayList<>();
+    private HashMap<String, Object> map;
     private static final String TAG = "ActorTemplateAdapter";
+    private String projectid;
 
     public ActorTemplateAdapter(DatabaseReference db, String projectid) {
+        this.projectid = projectid;
         db.getRoot()
                 .child("projects")
                 .child(projectid)
@@ -45,15 +45,11 @@ public class ActorTemplateAdapter extends RecyclerView.Adapter<ActorTemplateAdap
                     @Override
                     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                         //Get projects from firebase and put them inside arraylist.
-                        ActorTemplate at = dataSnapshot.getValue(ActorTemplate.class);
-                        if(at.getActor() != null) {
-                            at.setKey(dataSnapshot.getKey());
-                            actorTemplates.add(at);
-                            Log.d(TAG, dataSnapshot.getKey());
-                            notifyDataSetChanged();
-                        }
-
-                    }
+                        map = (HashMap<String, Object>)dataSnapshot.getValue();
+                        map.put("key", dataSnapshot.getKey());
+                        actorTemplates = HashMapHelper.addHashMapToActorTemplates(map, actorTemplates);
+                        notifyDataSetChanged();
+                   }
 
                     @Override
                     public void onChildChanged(DataSnapshot dataSnapshot, String s) {
@@ -76,10 +72,6 @@ public class ActorTemplateAdapter extends RecyclerView.Adapter<ActorTemplateAdap
                     }
                 });
 
-        //setupDatabaseListeners(db, projectid);
-    }
-
-    private void setupDatabaseListeners(DatabaseReference db, String projectid) {
 
     }
 
@@ -92,6 +84,12 @@ public class ActorTemplateAdapter extends RecyclerView.Adapter<ActorTemplateAdap
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         ActorTemplate at = actorTemplates.get(position);
+        if(position % 2 == 0){
+            holder.cardView.setCardBackgroundColor(Color.parseColor("#42A5F5"));
+        }
+        else{
+            holder.cardView.setCardBackgroundColor(Color.parseColor("#80CBC4"));
+        }
         holder.bindViews(at);
     }
 
@@ -104,34 +102,30 @@ public class ActorTemplateAdapter extends RecyclerView.Adapter<ActorTemplateAdap
 
         public TextView actor;
         public TextView beschrijving;
+        public TextView actortemplateid;
         public RecyclerView personen;
+        public CardView cardView;
 
         public ViewHolder(View v) {
             super(v);
+            cardView = (CardView) v.findViewById(R.id.card_view);
             beschrijving = (TextView) v.findViewById(R.id.actorbeschrijving);
             actor = (TextView) v.findViewById(R.id.actortitle);
             personen = (RecyclerView) v.findViewById(R.id.innerRecyclerView);
-
-//                public void onClick(View v) {
-//                    Intent projectDetailsActivity = new Intent(v.getContext(), ProjectDetailsActivity.class);
-//                    projectDetailsActivity.putExtra("projectid", id.getText());
-//                    v.getContext().startActivity(projectDetailsActivity);
-//                }
+            actortemplateid = (TextView) v.findViewById(R.id.actortemplate_id);
         }
 
         public void bindViews(ActorTemplate at){
             //Set card values
             beschrijving.setText(at.getBeschrijving());
             actor.setText(at.getActor());
+            actortemplateid.setText(at.getKey());
             //Config InnerRecyclerView
-            ActorTemplate temp = at;
             LinearLayoutManager layoutManager = new LinearLayoutManager(personen.getContext(), LinearLayoutManager.HORIZONTAL, false);
+            InnerRecyclerViewAdapter adapter = new InnerRecyclerViewAdapter(FirebaseDatabase.getInstance().getReference(), projectid, actortemplateid.getText().toString());
             personen.setLayoutManager(layoutManager);
-            InnerRecyclerViewAdapter adapter = new InnerRecyclerViewAdapter(at.getActoren());
             personen.setAdapter(adapter);
         }
-
-
     }
 
 

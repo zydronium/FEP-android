@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -18,7 +19,7 @@ import hu.nl.actortemplateapp.adapters.ActorTemplateAdapter;
  * Created by Dyon on 5-3-2017.
  */
 
-public class ProjectDetailsActivity extends BaseActivity {
+public class ActorTemplateActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -48,4 +49,10 @@ public class ProjectDetailsActivity extends BaseActivity {
         return super.onNavigationItemSelected(item);
     }
 
+    public void newActorTemplate(View view) {
+        String key = getIntent().getStringExtra("projectid");
+        Intent addactorintent = new Intent(getApplicationContext(), NewActorTemplateActivity.class);
+        addactorintent.putExtra("key", key);
+        startActivity(addactorintent);
+    }
 }

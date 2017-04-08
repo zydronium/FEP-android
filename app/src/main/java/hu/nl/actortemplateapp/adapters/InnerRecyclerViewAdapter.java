@@ -7,7 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import hu.nl.actortemplateapp.R;
 import hu.nl.actortemplateapp.data_classes.Actor;
@@ -19,10 +25,40 @@ import hu.nl.actortemplateapp.data_classes.Actor;
 public class InnerRecyclerViewAdapter extends RecyclerView.Adapter<InnerRecyclerViewAdapter.ViewHolder> {
 
     private ArrayList<Actor> actoren;
+    private final static String TAG = "InnerRecycler";
 
-    public InnerRecyclerViewAdapter(ArrayList<Actor> actoren) {
-        this.actoren = actoren;
-        for(int i = 0; i < actoren.size(); i++){ Log.d("Wut", String.valueOf(actoren.get(i))); }
+    public InnerRecyclerViewAdapter(DatabaseReference db, String projectid, String atid)
+    {
+        actoren = new ArrayList<Actor>();
+        Log.d(TAG, "CTOR");
+        db.getRoot().child("projects").child(projectid).child("actortemplates").child(atid).child("actoren").addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                Actor actor = dataSnapshot.getValue(Actor.class);
+                actor.setKey(dataSnapshot.getKey());
+                actoren.add(actor);
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     @Override

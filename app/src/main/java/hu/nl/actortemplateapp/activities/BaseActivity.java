@@ -49,7 +49,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
     protected DatabaseReference firebase;
 
     protected void onCreateDrawer(){
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
         if(FirebaseAuth.getInstance().getCurrentUser() == null) {
             Intent signInIntent = new Intent(this, SignInActivity.class);
             startActivity(signInIntent);
@@ -59,12 +59,14 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
 
         firebase = FirebaseDatabase.getInstance().getReference();
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         try {
             new GetImageTask().execute(new URL(FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl().toString()));
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
         setSupportActionBar(toolbar);
 
 
@@ -103,6 +105,10 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.activity_main_drawer, menu);
         return true;
+    }
+
+    protected boolean hasFirebaseReference(){
+        return !(firebase == null);
     }
 
     @Override
