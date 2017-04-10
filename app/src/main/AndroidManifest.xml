@@ -29,6 +29,9 @@
         <activity android:name=".activities.TemplateWithActorsActivity"
             android:theme="@style/AppTheme.NoActionBar" />
 
+        <activity android:name=".activities.EditActorActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+
     </application>
 
 </manifest>
