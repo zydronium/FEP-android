@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,9 +19,8 @@ import com.google.firebase.database.DatabaseReference;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
+import hu.nl.actortemplateapp.HashMapHelper;
 import hu.nl.actortemplateapp.R;
 import hu.nl.actortemplateapp.activities.ActorTemplateActivity;
 import hu.nl.actortemplateapp.data_classes.Project;

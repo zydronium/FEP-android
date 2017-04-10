@@ -59,11 +59,11 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
 
         firebase = FirebaseDatabase.getInstance().getReference();
 
-        try {
-            new GetImageTask().execute(new URL(FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl().toString()));
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            new GetImageTask().execute(new URL(FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl().toString()));
+//        } catch (MalformedURLException e) {
+//            e.printStackTrace();
+//        }
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
@@ -132,6 +132,11 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
             signOut();
         }
 
+        if(id == R.id.action_home){
+            Intent home = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(home);
+        }
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
@@ -150,7 +155,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
         startActivity(startAppIntent);
     }
 
-    private class GetImageTask extends AsyncTask<URL, Integer, Drawable> {
+    public class GetImageTask extends AsyncTask<URL, Integer, Drawable> {
         @Override
         protected Drawable doInBackground(URL... params) {
             URLConnection connection = null;
@@ -173,7 +178,6 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
             Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
             toolbar.setOverflowIcon(result);
         }
-
     }
 }
 

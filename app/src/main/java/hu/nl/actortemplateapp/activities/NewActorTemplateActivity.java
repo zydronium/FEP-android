@@ -1,16 +1,20 @@
 package hu.nl.actortemplateapp.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
+
+import org.w3c.dom.Text;
 
 import hu.nl.actortemplateapp.R;
 import hu.nl.actortemplateapp.data_classes.ActorTemplate;
@@ -23,6 +27,7 @@ public class NewActorTemplateActivity extends BaseActivity {
 
     private EditText templatetitel;
     private EditText templatebeschrijving;
+    private TextView titel;
     private String key;
     private FloatingActionButton addactortemplate;
 
@@ -34,8 +39,10 @@ public class NewActorTemplateActivity extends BaseActivity {
         templatetitel = (EditText) findViewById(R.id.actorTemplateTitle);
         templatebeschrijving = (EditText) findViewById(R.id.actorTemplateBeschrijving);
         addactortemplate = (FloatingActionButton) findViewById(R.id.addactortemplatebutton);
+        titel = (TextView) findViewById(R.id.addActorTemplateText);
+        titel.setText("Hier kunt U een nieuwe ActorTemplate creëren door de velden in te vullen en de opslag knop te selecteren. De velden dienen allebei een waarde te bevatten");
+
         key = getIntent().getStringExtra("key");
-        setFirebaseListener(key);
 
         addactortemplate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,34 +53,24 @@ public class NewActorTemplateActivity extends BaseActivity {
                     newActorTemplate.setActor(templatetitel.getText().toString());
                     newActorTemplate.setBeschrijving(templatebeschrijving.getText().toString());
                     firebase.getRoot().child("projects").child(key).child("actortemplates").push().setValue(newActorTemplate);
+                    Intent returntoprojectdetailsactivity = new Intent(getBaseContext(), ActorTemplateActivity.class);
+                    returntoprojectdetailsactivity.putExtra("projectid", key);
+                    startActivity(returntoprojectdetailsactivity);
                 }
                 else {
-                    Toast.makeText(getApplicationContext(), "Titel of beschrijving niet valide", Toast.LENGTH_LONG);
+                    Toast.makeText(getApplicationContext(), "Titel of beschrijving niet valide", Toast.LENGTH_LONG).show();
                 }
+
             }
         });
     }
 
     private boolean validateNewActorTemplate(View v){
         boolean output = false;
-        if(templatetitel.getText().toString() != "" && templatebeschrijving.getText().toString() != ""){
+        if(!(templatetitel.getText().toString().equals("")) && !(templatebeschrijving.getText().toString().equals(""))){
             output = true;
         }
         return output;
-    }
-
-    private void setFirebaseListener(String key) {
-        firebase.getRoot().child("projects").child(key).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
     }
 
 

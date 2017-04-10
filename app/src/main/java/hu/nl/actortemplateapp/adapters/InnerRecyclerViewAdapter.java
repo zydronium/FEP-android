@@ -15,6 +15,7 @@ import com.google.firebase.database.DatabaseReference;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import hu.nl.actortemplateapp.HashMapHelper;
 import hu.nl.actortemplateapp.R;
 import hu.nl.actortemplateapp.data_classes.Actor;
 
@@ -24,19 +25,19 @@ import hu.nl.actortemplateapp.data_classes.Actor;
 
 public class InnerRecyclerViewAdapter extends RecyclerView.Adapter<InnerRecyclerViewAdapter.ViewHolder> {
 
-    private ArrayList<Actor> actoren;
+    private ArrayList<Actor> actoren = new ArrayList<Actor>();
     private final static String TAG = "InnerRecycler";
 
     public InnerRecyclerViewAdapter(DatabaseReference db, String projectid, String atid)
     {
-        actoren = new ArrayList<Actor>();
         Log.d(TAG, "CTOR");
+
         db.getRoot().child("projects").child(projectid).child("actortemplates").child(atid).child("actoren").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                Actor actor = dataSnapshot.getValue(Actor.class);
-                actor.setKey(dataSnapshot.getKey());
-                actoren.add(actor);
+                HashMap<String, Object> map = (HashMap<String, Object>)dataSnapshot.getValue();
+                map.put("key", dataSnapshot.getKey());
+                actoren = HashMapHelper.addHashMapToActors(map, actoren);
             }
 
             @Override
@@ -69,6 +70,7 @@ public class InnerRecyclerViewAdapter extends RecyclerView.Adapter<InnerRecycler
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+        Log.d(TAG, "InnerOnBindVH called setting text: "+ actoren.get(position).getNaam());
         holder.personname.setText(actoren.get(position).getNaam());
     }
 

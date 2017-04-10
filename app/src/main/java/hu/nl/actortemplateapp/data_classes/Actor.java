@@ -12,6 +12,7 @@ public class Actor {
     public String functie;
     public String naam;
     public String key;
+    public String telefoonnummer;
 
     public Actor() {
     }
@@ -60,5 +61,13 @@ public class Actor {
 
     public void setNaam(String naam) {
         this.naam = naam;
+    }
+
+    public String getTelefoonnummer() {
+        return telefoonnummer;
+    }
+
+    public void setTelefoonnummer(String telefoonnummer) {
+        this.telefoonnummer = telefoonnummer;
     }
 }

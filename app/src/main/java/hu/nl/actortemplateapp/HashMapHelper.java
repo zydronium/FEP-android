@@ -1,4 +1,4 @@
-package hu.nl.actortemplateapp.adapters;
+package hu.nl.actortemplateapp;
 
 import android.util.Log;
 
@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import hu.nl.actortemplateapp.data_classes.Actor;
 import hu.nl.actortemplateapp.data_classes.ActorTemplate;
 import hu.nl.actortemplateapp.data_classes.Project;
 
@@ -64,5 +65,31 @@ public class HashMapHelper {
         actorTemplates.add(temp);
 
         return actorTemplates;
+    }
+
+    public static ArrayList<Actor> addHashMapToActors(HashMap<String, Object> map, ArrayList<Actor> actoren) {
+        Actor temp = new Actor();
+        for(Map.Entry<String, Object> entry : map.entrySet()){
+            if(entry.getKey().equals("key")){
+                temp.setKey(entry.getValue().toString());
+            }
+            if(entry.getKey().equals("naam")){
+                temp.setNaam(entry.getValue().toString());
+            }
+            if(entry.getKey().equals("email")){
+                temp.setEmail(entry.getValue().toString());
+            }
+            if(entry.getKey().equals("telefoonnummer")){
+                temp.setTelefoonnummer(entry.getValue().toString());
+            }
+            if(entry.getKey().equals("functie")){
+                temp.setFunctie(entry.getValue().toString());
+            }
+            if(entry.getKey().equals("aantekeningen")){
+                temp.setAantekeningen(entry.getValue().toString());
+            }
+        }
+        actoren.add(temp);
+        return actoren;
     }
 }

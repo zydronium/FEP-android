@@ -17,8 +17,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="2dp"
-            >
+            android:layout_margin="2dp">
 
             <android.widget.TextView
                 android:id="@+id/project_title"
@@ -45,7 +44,6 @@
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_centerVertical="true"
-
                 android:layout_alignParentRight="true"
                 android:paddingBottom="10dp"
                 android:paddingRight="10dp"

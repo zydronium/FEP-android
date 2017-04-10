@@ -1,10 +1,10 @@
 package hu.nl.actortemplateapp.adapters;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,9 +18,10 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
+import hu.nl.actortemplateapp.HashMapHelper;
 import hu.nl.actortemplateapp.R;
+import hu.nl.actortemplateapp.activities.TemplateWithActorsActivity;
 import hu.nl.actortemplateapp.data_classes.ActorTemplate;
 
 /**
@@ -113,6 +114,15 @@ public class ActorTemplateAdapter extends RecyclerView.Adapter<ActorTemplateAdap
             actor = (TextView) v.findViewById(R.id.actortitle);
             personen = (RecyclerView) v.findViewById(R.id.innerRecyclerView);
             actortemplateid = (TextView) v.findViewById(R.id.actortemplate_id);
+            cardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent actortemplatedetails = new Intent(v.getContext(), TemplateWithActorsActivity.class);
+                    actortemplatedetails.putExtra("projectid", projectid);
+                    actortemplatedetails.putExtra("actortemplateid", actortemplateid.getText().toString());
+                    v.getContext().startActivity(actortemplatedetails);
+                }
+            });
         }
 
         public void bindViews(ActorTemplate at){
