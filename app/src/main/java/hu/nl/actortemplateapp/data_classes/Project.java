@@ -12,6 +12,10 @@ public class Project {
     public String description;
     public String key;
     public String analist;
+    public Boolean isArchived = false;
+
+
+
 
 
     public Project(){
@@ -49,6 +53,14 @@ public class Project {
 
     public void setAnalist(String analist) {
         this.analist = analist;
+    }
+
+    public Boolean getIsArchived() {
+        return isArchived;
+    }
+
+    public void setIsArchived(Boolean archived) {
+        isArchived = archived;
     }
 
 }

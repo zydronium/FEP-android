@@ -12,7 +12,7 @@ public class ActorTemplate {
     private String actor;
     private String beschrijving;
     private String key;
-    private boolean isArchived;
+    private boolean isArchived = false;
     private HashMap<String, Object> actoren;
 
     public ActorTemplate(){

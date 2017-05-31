@@ -31,6 +31,9 @@
 
         <activity android:name=".activities.EditActorActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+        
+        <activity android:name=".activities.NewProjectActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
 
     </application>
 

@@ -33,12 +33,18 @@ public class HashMapHelper {
             if(entry.getKey().equals("key")){
                 temp.setKey(entry.getValue().toString());
             }
+            if(entry.getKey().equals("isArchived")){
+                temp.setIsArchived(Boolean.parseBoolean(entry.getValue().toString()));
+            }
+
             //Hashmap removed because it will not be passed around, but instead retrieved in a seperate db call and is therefore useless
 //            if(entry.getKey().equals("actortemplates")){
 //                temp.setActortemplates((HashMap<String, Object>)entry.getValue());
 //            }
         }
-        curlist.add(temp);
+        if(!temp.getIsArchived()){
+            curlist.add(temp);
+        }
         return curlist;
     }
 
@@ -62,8 +68,9 @@ public class HashMapHelper {
                 //temp.setActoren((HashMap<String, Object>) entry.getValue());
             }
         }
-        actorTemplates.add(temp);
-
+        if(!temp.getIsArchived()) {
+            actorTemplates.add(temp);
+        }
         return actorTemplates;
     }
 

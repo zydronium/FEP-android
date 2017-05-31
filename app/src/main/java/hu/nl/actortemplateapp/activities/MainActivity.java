@@ -3,6 +3,7 @@ package hu.nl.actortemplateapp.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.design.widget.NavigationView;
@@ -13,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -48,7 +50,16 @@ public class MainActivity extends BaseActivity {
 
             mAdapter = new ProjectAdapter(firebase);
             mRecyclerView.setAdapter(mAdapter);
+            FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.newProjectFAB);
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent newProjectIntent = new Intent(v.getContext(), NewProjectActivity.class);
+                    startActivity(newProjectIntent);
+                }
+            });
         }
+
     }
 
     @Override
