@@ -30,7 +30,7 @@ public class ActorTemplate {
     public boolean getIsArchived() {
         return isArchived;
     }
-    
+
     public void setIsArchived(boolean archived) {
         isArchived = archived;
     }

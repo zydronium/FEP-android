@@ -59,11 +59,11 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
 
         firebase = FirebaseDatabase.getInstance().getReference();
 
-//        try {
-//            new GetImageTask().execute(new URL(FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl().toString()));
-//        } catch (MalformedURLException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            new GetImageTask().execute(new URL(FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl().toString()));
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 

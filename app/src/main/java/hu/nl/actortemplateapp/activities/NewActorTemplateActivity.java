@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+import android.util.TypedValue;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -41,7 +42,7 @@ public class NewActorTemplateActivity extends BaseActivity {
         addactortemplate = (FloatingActionButton) findViewById(R.id.addactortemplatebutton);
         titel = (TextView) findViewById(R.id.addActorTemplateText);
         titel.setText("Hier kunt U een nieuwe ActorTemplate creëren door de velden in te vullen en de opslag knop te selecteren. De velden dienen allebei een waarde te bevatten");
-
+        titel.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 32);
         key = getIntent().getStringExtra("key");
 
         addactortemplate.setOnClickListener(new View.OnClickListener() {
